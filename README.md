@@ -77,7 +77,7 @@ func main() {
 ```
 
 environment variable output
-```
+```bash
 $ echo $A $B $J $K $L
 aaa bbb jjj kkk lll
 
