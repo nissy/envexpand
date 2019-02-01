@@ -95,7 +95,9 @@ func (envs environs) in(a interface{}) interface{} {
 		return envs.replace(v)
 	case []interface{}:
 		for i, vv := range v {
-			v[i] = envs.in(vv)
+			if vvv := envs.in(vv); vvv != nil {
+				v[i] = envs.in(vv)
+			}
 		}
 	case []map[string]interface{}:
 		for _, vv := range v {
