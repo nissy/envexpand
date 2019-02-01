@@ -15,9 +15,9 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+var version string
+
 var (
-	version   = "0.0.1"
-	format    = flag.String("format", "", "show version and exit")
 	isVersion = flag.Bool("v", false, "show version and exit")
 	isHelp    = flag.Bool("h", false, "this help")
 )
@@ -50,7 +50,6 @@ func run() (err error) {
 	}
 
 	filename := args[0]
-
 	file, err := os.Open(filename)
 	if err != nil {
 		return err
@@ -70,16 +69,13 @@ func run() (err error) {
 	}
 
 	fmt.Println(string(data))
+
 	return nil
 }
 
 func expand(filename string, in []byte, out interface{}) ([]byte, error) {
-	if len(*format) > 0 {
-		filename = fmt.Sprintf(".%s", *format)
-	}
-
 	switch {
-	case strings.HasSuffix(filename, ".json"), strings.HasSuffix(filename, ".JSON"):
+	case hasSuffixes(filename, ".json", ".JSON"):
 		if err := json.Unmarshal(in, out); err != nil {
 			return nil, err
 		}
@@ -87,7 +83,7 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 			return nil, err
 		}
 		return json.Marshal(out)
-	case strings.HasSuffix(filename, ".toml"), strings.HasSuffix(filename, ".TOML"):
+	case hasSuffixes(filename, ".toml", ".TOML"):
 		if err := toml.Unmarshal(in, out); err != nil {
 			return nil, err
 		}
@@ -95,7 +91,7 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 			return nil, err
 		}
 		return toml.Marshal(out)
-	case strings.HasSuffix(filename, ".yaml"), strings.HasSuffix(filename, ".YAML"), strings.HasSuffix(filename, ".yml"), strings.HasSuffix(filename, ".YML"):
+	case hasSuffixes(filename, ".yaml", ".yml", ".YAML", ".YML"):
 		if err := yaml.Unmarshal(in, out); err != nil {
 			return nil, err
 		}
@@ -106,4 +102,14 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 	}
 
 	return nil, errors.New("Format is not supported.")
+}
+
+func hasSuffixes(s string, suffixes ...string) bool {
+	for _, v := range suffixes {
+		if strings.HasSuffix(s, v) {
+			return true
+		}
+	}
+
+	return false
 }
