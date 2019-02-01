@@ -106,8 +106,7 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 
 func isFileExtension(s string, suffixes ...string) bool {
 	for _, v := range suffixes {
-		v = fmt.Sprintf(".%s", v)
-		if strings.HasSuffix(s, v) || strings.HasSuffix(s, strings.ToLower(v)) {
+		if vv := fmt.Sprintf(".%s", v); strings.HasSuffix(s, vv) || strings.HasSuffix(s, strings.ToLower(vv)) {
 			return true
 		}
 	}
