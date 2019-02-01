@@ -2,11 +2,6 @@
 envexpand recursively replaces strings with environment variables.
 
 ## example
-environment variables
-```bash
-$  echo $A $B $J $K $L
-aaa bbb jjj kkk lll
-```
 
 example/main.go
 ```go
@@ -81,10 +76,12 @@ func main() {
 }
 ```
 
-output
+environment variable output
 ```
-$ go run *.go
+$ echo $A $B $J $K $L
+aaa bbb jjj kkk lll
 
+$ go run *.go
 main.ABC{
   A: "aaa",
   B: []string{
