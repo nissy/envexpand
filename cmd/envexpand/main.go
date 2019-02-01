@@ -75,7 +75,7 @@ func run() (err error) {
 
 func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 	switch {
-	case hasSuffixes(filename, ".json", ".JSON"):
+	case isFileExtension(filename, "JSON"):
 		if err := json.Unmarshal(in, out); err != nil {
 			return nil, err
 		}
@@ -83,7 +83,7 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 			return nil, err
 		}
 		return json.Marshal(out)
-	case hasSuffixes(filename, ".toml", ".TOML"):
+	case isFileExtension(filename, "TOML"):
 		if err := toml.Unmarshal(in, out); err != nil {
 			return nil, err
 		}
@@ -91,7 +91,7 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 			return nil, err
 		}
 		return toml.Marshal(out)
-	case hasSuffixes(filename, ".yaml", ".yml", ".YAML", ".YML"):
+	case isFileExtension(filename, "YAML", "YML"):
 		if err := yaml.Unmarshal(in, out); err != nil {
 			return nil, err
 		}
@@ -104,9 +104,10 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 	return nil, errors.New("Format is not supported.")
 }
 
-func hasSuffixes(s string, suffixes ...string) bool {
+func isFileExtension(s string, suffixes ...string) bool {
 	for _, v := range suffixes {
-		if strings.HasSuffix(s, v) {
+		v = fmt.Sprintf(".%s", v)
+		if strings.HasSuffix(s, v) || strings.HasSuffix(s, strings.ToLower(v)) {
 			return true
 		}
 	}
