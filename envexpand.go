@@ -49,7 +49,7 @@ func (envs environs) do(v interface{}) error {
 		switch que.Kind() {
 		case reflect.Struct:
 			for i := 0; i < que.NumField(); i++ {
-				if isChild(que.Field(i)) || que.Field(i).Kind() == reflect.Slice || que.Field(i).Kind() == reflect.Map {
+				if haveChild(que.Field(i)) || que.Field(i).Kind() == reflect.Slice || que.Field(i).Kind() == reflect.Map {
 					ques = append(ques, que.Field(i))
 				} else if que.Field(i).Kind() == reflect.String {
 					que.Field(i).SetString(
@@ -60,7 +60,7 @@ func (envs environs) do(v interface{}) error {
 				}
 			}
 		case reflect.Slice:
-			if isChild(que) {
+			if haveChild(que) {
 				for i := 0; i < que.Len(); i++ {
 					ques = append(ques, que.Index(i))
 				}
@@ -70,7 +70,7 @@ func (envs environs) do(v interface{}) error {
 				}
 			}
 		case reflect.Map:
-			if isChild(que) {
+			if haveChild(que) {
 				for _, v := range que.MapKeys() {
 					ques = append(ques, que.MapIndex(v))
 				}
@@ -122,7 +122,7 @@ func (envs environs) in(a interface{}) interface{} {
 	return nil
 }
 
-func isChild(v reflect.Value) bool {
+func haveChild(v reflect.Value) bool {
 	if i := reflect.TypeOf(v.Interface()); i != nil {
 		if isChildKind(i.Kind()) {
 			if e := i.Elem(); e != nil {

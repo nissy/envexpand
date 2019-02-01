@@ -1,10 +1,8 @@
-package envexpand
+package main
 
 import (
-	"os"
-	"testing"
-
 	"github.com/k0kubun/pp"
+	"github.com/nissy/envexpand"
 )
 
 type (
@@ -14,6 +12,7 @@ type (
 		C map[int]string
 		D *D
 	}
+
 	D struct {
 		E string
 		F *F
@@ -28,14 +27,9 @@ type (
 		K []map[int]string
 		L []string
 	}
-
-	KeyValue struct {
-		key   string
-		value string
-	}
 )
 
-func TestExpandStruct(t *testing.T) {
+func main() {
 	abc := ABC{
 		A: "$A",
 		B: []string{
@@ -67,42 +61,9 @@ func TestExpandStruct(t *testing.T) {
 		},
 	}
 
-	setenvs([]*KeyValue{
-		{
-			key:   "A",
-			value: "aaa",
-		},
-		{
-			key:   "B",
-			value: "bbb",
-		},
-		{
-			key:   "J",
-			value: "jjj",
-		},
-		{
-			key:   "K",
-			value: "kkk",
-		},
-		{
-			key:   "L",
-			value: "lll",
-		},
-	})
-
-	pp.Println(abc)
-
-	if err := Do(&abc); err != nil {
-		t.Fatal(err)
+	if err := envexpand.Do(&abc); err != nil {
+		panic(err)
 	}
 
 	pp.Println(abc)
-}
-
-func setenvs(kvs []*KeyValue) {
-	for _, v := range kvs {
-		if err := os.Setenv(v.key, v.value); err != nil {
-			panic(err)
-		}
-	}
 }
