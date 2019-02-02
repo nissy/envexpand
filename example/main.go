@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/k0kubun/pp"
+	"fmt"
+
 	"github.com/nissy/envexpand"
 )
 
@@ -65,5 +66,5 @@ func main() {
 		panic(err)
 	}
 
-	pp.Println(abc)
+	fmt.Printf("%#v", abc)
 }

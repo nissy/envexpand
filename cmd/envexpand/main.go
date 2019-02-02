@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -10,8 +11,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/BurntSushi/toml"
 	"github.com/nissy/envexpand"
-	"github.com/pelletier/go-toml"
 	"gopkg.in/yaml.v2"
 )
 
@@ -90,7 +91,9 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 		if err := envexpand.Do(out); err != nil {
 			return nil, err
 		}
-		return toml.Marshal(out)
+		var buf bytes.Buffer
+		err := toml.NewEncoder(&buf).Encode(out)
+		return buf.Bytes(), err
 	case isFileExtension(filename, "YAML", "YML"):
 		if err := yaml.Unmarshal(in, out); err != nil {
 			return nil, err
