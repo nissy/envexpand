@@ -32,7 +32,7 @@ type (
 )
 
 func TestExpandStruct(t *testing.T) {
-	x := ABC{
+	v1 := ABC{
 		A: "$A",
 		B: []string{
 			"$B",
@@ -64,14 +64,14 @@ func TestExpandStruct(t *testing.T) {
 	}
 
 	envs := map[string]string{
-		"A": "aaa",
-		"B": "bbb",
-		"J": "jjj",
-		"K": "kkk",
-		"L": "lll",
+		"A": "AAA",
+		"B": "BBB",
+		"J": "JJJ",
+		"K": "KKK",
+		"L": "LLL",
 	}
 
-	y := ABC{
+	v2 := ABC{
 		A: envs["A"],
 		B: []string{
 			envs["B"],
@@ -104,11 +104,11 @@ func TestExpandStruct(t *testing.T) {
 
 	setenvs(envs)
 
-	if err := Do(&x); err != nil {
+	if err := Do(&v1); err != nil {
 		t.Fatal(err)
 	}
 
-	if diff := cmp.Diff(x, y); diff != "" {
+	if diff := cmp.Diff(v1, v2); diff != "" {
 		fmt.Printf("v1 != v2\n%s\n", diff)
 	}
 }
