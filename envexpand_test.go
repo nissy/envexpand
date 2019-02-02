@@ -1,10 +1,11 @@
 package envexpand
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
-	"github.com/k0kubun/pp"
+	"github.com/google/go-cmp/cmp"
 )
 
 type (
@@ -28,15 +29,10 @@ type (
 		K []map[int]string
 		L []string
 	}
-
-	KeyValue struct {
-		key   string
-		value string
-	}
 )
 
 func TestExpandStruct(t *testing.T) {
-	abc := ABC{
+	x := ABC{
 		A: "$A",
 		B: []string{
 			"$B",
@@ -67,41 +63,59 @@ func TestExpandStruct(t *testing.T) {
 		},
 	}
 
-	setenvs([]*KeyValue{
-		{
-			key:   "A",
-			value: "aaa",
-		},
-		{
-			key:   "B",
-			value: "bbb",
-		},
-		{
-			key:   "J",
-			value: "jjj",
-		},
-		{
-			key:   "K",
-			value: "kkk",
-		},
-		{
-			key:   "L",
-			value: "lll",
-		},
-	})
+	envs := map[string]string{
+		"A": "aaa",
+		"B": "bbb",
+		"J": "jjj",
+		"K": "kkk",
+		"L": "lll",
+	}
 
-	pp.Println(abc)
+	y := ABC{
+		A: envs["A"],
+		B: []string{
+			envs["B"],
+			envs["B"],
+			envs["B"],
+		},
+		D: &D{
+			F: &F{
+				I: []*I{
+					{
+						J: envs["J"],
+					},
+					{
+						J: envs["J"],
+						K: []map[int]string{
+							{
+								1: envs["K"],
+								2: envs["K"],
+							},
+						},
+						L: []string{
+							envs["L"],
+							envs["L"],
+						},
+					},
+				},
+			},
+		},
+	}
 
-	if err := Do(&abc); err != nil {
+	setenvs(envs)
+
+	if err := Do(&x); err != nil {
 		t.Fatal(err)
 	}
 
-	pp.Println(abc)
+	if diff := cmp.Diff(x, y); diff != "" {
+		fmt.Printf("v1 != v2\n%s\n", diff)
+	}
 }
 
-func setenvs(kvs []*KeyValue) {
-	for _, v := range kvs {
-		if err := os.Setenv(v.key, v.value); err != nil {
+func setenvs(kvs map[string]string) {
+	for k, v := range kvs {
+		if err := os.Setenv(k, v); err != nil {
 			panic(err)
 		}
 	}

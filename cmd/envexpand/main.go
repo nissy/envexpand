@@ -40,7 +40,7 @@ func run() (err error) {
 	}
 
 	if *isHelp {
-		_, err = fmt.Fprintf(os.Stderr, "Usage: %s [options] file\n", os.Args[0])
+		_, err = fmt.Fprintf(os.Stderr, "Usage: %s [options] [file JSON|YAML|TOML]\n", os.Args[0])
 		flag.PrintDefaults()
 		return err
 	}
@@ -104,8 +104,8 @@ func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 	return nil, errors.New("Format is not supported.")
 }
 
-func isFileExtension(s string, suffixes ...string) bool {
-	for _, v := range suffixes {
+func isFileExtension(s string, ex ...string) bool {
+	for _, v := range ex {
 		if vv := fmt.Sprintf(".%s", v); strings.HasSuffix(s, vv) || strings.HasSuffix(s, strings.ToLower(vv)) {
 			return true
 		}
