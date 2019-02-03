@@ -76,16 +76,16 @@ func main() {
 environment variable output
 ```bash
 $ echo A=$A B=$B J=$J K=$K L=$L
-A=aaa B=bbb J=jjj K=kkk L=lll
+A=AAAAA B=BBBBB J=JJJJJ K=KKKKK L=LLLLL
 ```
 
 ```
 main.ABC{
-  A: "aaa",
+  A: "AAAAA",
   B: []string{
-    "bbb",
-    "bbb",
-    "bbb",
+    "BBBBB",
+    "BBBBB",
+    "BBBBB",
   },
   C: map[int]string{},
   D: &main.D{
@@ -95,21 +95,21 @@ main.ABC{
       H: "",
       I: []*main.I{
         &main.I{
-          J: "jjj",
+          J: "JJJJJ",
           K: []map[int]string{},
           L: []string{},
         },
         &main.I{
-          J: "jjj",
+          J: "JJJJJ",
           K: []map[int]string{
             map[int]string{
-              1: "kkk",
-              2: "kkk",
+              1: "KKKKK",
+              2: "KKKKK",
             },
           },
           L: []string{
-            "lll",
-            "lll",
+            "LLLLL",
+            "LLLLL",
           },
         },
       },
