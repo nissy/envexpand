@@ -3,12 +3,11 @@ envexpand recursively replaces strings with environment variables.
 
 ## example
 
-example/main.go
+github.com/nissy/envexpand
 ```go
 package main
 
 import (
-	"github.com/k0kubun/pp"
 	"github.com/nissy/envexpand"
 )
 
@@ -37,7 +36,7 @@ type (
 )
 
 func main() {
-	abc := ABC{
+	data := ABC{
 		A: "$A",
 		B: []string{
 			"$B",
@@ -68,20 +67,19 @@ func main() {
 		},
 	}
 
-	if err := envexpand.Do(&abc); err != nil {
+	if err := envexpand.Do(&data); err != nil {
 		panic(err)
 	}
-
-	pp.Println(abc)
 }
 ```
 
 environment variable output
 ```bash
-$ echo $A $B $J $K $L
-aaa bbb jjj kkk lll
+$ echo A=$A B=$B J=$J K=$K L=$L
+A=aaa B=bbb J=jjj K=kkk L=lll
+```
 
-$ go run *.go
+```
 main.ABC{
   A: "aaa",
   B: []string{

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/nissy/envexpand"
 )
 
@@ -31,7 +29,7 @@ type (
 )
 
 func main() {
-	abc := ABC{
+	data := ABC{
 		A: "$A",
 		B: []string{
 			"$B",
@@ -62,9 +60,47 @@ func main() {
 		},
 	}
 
-	if err := envexpand.Do(&abc); err != nil {
+	if err := envexpand.Do(&data); err != nil {
 		panic(err)
 	}
-
-	fmt.Printf("%#v", abc)
 }
+
+// environment variable output
+/*
+main.ABC{
+  A: "aaa",
+  B: []string{
+    "bbb",
+    "bbb",
+    "bbb",
+  },
+  C: map[int]string{},
+  D: &main.D{
+    E: "",
+    F: &main.F{
+      G: 0,
+      H: "",
+      I: []*main.I{
+        &main.I{
+          J: "jjj",
+          K: []map[int]string{},
+          L: []string{},
+        },
+        &main.I{
+          J: "jjj",
+          K: []map[int]string{
+            map[int]string{
+              1: "kkk",
+              2: "kkk",
+            },
+          },
+          L: []string{
+            "lll",
+            "lll",
+          },
+        },
+      },
+    },
+  },
+}
+*/
