@@ -18,7 +18,6 @@ type (
         C map[int]string
         D *D
     }
-
     D struct {
         E string
         F *F
