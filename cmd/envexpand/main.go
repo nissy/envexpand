@@ -65,7 +65,7 @@ func run() error {
 		return err
 	}
 
-	fmt.Println(string(data))
+	fmt.Print(string(data))
 
 	return nil
 }

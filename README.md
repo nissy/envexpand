@@ -1,15 +1,76 @@
 # envexpand
 envexpand recursively replaces strings with environment variables.
 
-## example
+## command
 
-github.com/nissy/envexpand
+envexpand command expands environment variables of yaml, json, toml files.
+
+### install
+```bash
+go get -u github.com/nissy/envexpand/cmd/envexpand
+```
+
+### usage
+
+```bash
+$ cat example.yaml
+glossary: 
+  title: "example glossary"
+  GlossDiv: 
+    title: S
+    GlossList: 
+      GlossEntry: 
+        ID: "$ID"
+        SortAs: "$ID"
+        GlossTerm: "Standard Generalized Markup Language"
+        Acronym: "$ID"
+        Abbrev: "ISO 8879:1986"
+        GlossDef: 
+          para: "A meta-markup language, used to create markup languages such as DocBook."
+          GlossSeeAlso: 
+            - GML
+            - XML
+        GlossSee: markup
+```
+
+```bash
+$ export ID=SGML
+```
+
+```bash
+$ envexpand example.yaml
+glossary:
+  title: "example glossary"
+  GlossDiv:
+    title: S
+    GlossList:
+      GlossEntry:
+        ID: "SGML"
+        SortAs: "SGML"
+        GlossTerm: "Standard Generalized Markup Language"
+        Acronym: "SGML"
+        Abbrev: "ISO 8879:1986"
+        GlossDef:
+          para: "A meta-markup language, used to create markup languages such as DocBook."
+          GlossSeeAlso:
+            - GML
+            - XML
+        GlossSee: markup
+```
+
+## package
+
+### install
+```bash
+go get -u github.com/nissy/envexpand
+```
+
+### example
+
 ```go
 package main
 
-import (
-    "github.com/nissy/envexpand"
-)
+import "github.com/nissy/envexpand"
 
 type (
     ABC struct {
