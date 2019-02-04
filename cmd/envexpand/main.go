@@ -31,7 +31,7 @@ func main() {
 	os.Exit(0)
 }
 
-func run() (err error) {
+func run() error {
 	flag.Parse()
 	args := flag.Args()
 
@@ -40,14 +40,10 @@ func run() (err error) {
 		return nil
 	}
 
-	if *isHelp {
-		_, err = fmt.Fprintf(os.Stderr, "Usage: %s [options] [file JSON|YAML|TOML]\n", os.Args[0])
+	if *isHelp || len(args) == 0 {
+		_, err := fmt.Fprintf(os.Stderr, "Usage: %s [options] [file JSON|YAML|TOML]\n", os.Args[0])
 		flag.PrintDefaults()
 		return err
-	}
-
-	if len(args) == 0 {
-		return nil
 	}
 
 	filename := args[0]
