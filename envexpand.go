@@ -17,6 +17,10 @@ var (
 	rep = regexp.MustCompile(`\$[a-zA-Z_]{1,}[a-zA-Z0-9_]{0,}|\$\{[a-zA-Z_]{1,}[a-zA-Z0-9_]{0,}\}`)
 )
 
+func CompileRegexp(s string) {
+	rep = regexp.MustCompile(s)
+}
+
 func newEnvirons() environs {
 	es := map[string]string{}
 	for _, v := range os.Environ() {
