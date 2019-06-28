@@ -14,7 +14,7 @@ type (
 )
 
 var (
-	rep = regexp.MustCompile(`\$[a-zA-Z_]{1,}[a-zA-Z0-9_]{0,}|\$\{[a-zA-Z_]{1,}[a-zA-Z0-9_]{0,}\}`)
+	rep = regexp.MustCompile(`\$\{[a-zA-Z_]{1,}[a-zA-Z0-9_]{0,}\}`)
 )
 
 func CompileRegexp(s string) {

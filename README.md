@@ -20,10 +20,10 @@ glossary:
     title: S
     GlossList: 
       GlossEntry: 
-        ID: "$ID"
-        SortAs: "$ID"
+        ID: "${ID}"
+        SortAs: "${ID}"
         GlossTerm: "Standard Generalized Markup Language"
-        Acronym: "$ID"
+        Acronym: "${ID}"
         Abbrev: "ISO 8879:1986"
         GlossDef: 
           para: "A meta-markup language, used to create markup languages such as DocBook."
@@ -97,29 +97,29 @@ type (
 
 func main() {
     data := ABC{
-        A: "$A",
+        A: "${A}",
         B: []string{
-            "$B",
-            "$B",
-            "$B",
+            "${B}",
+            "${B}",
+            "${B}",
         },
         D: &D{
             F: &F{
                 I: []*I{
                     {
-                        J: "$J",
+                        J: "${J}",
                     },
                     {
-                        J: "$J",
+                        J: "${J}",
                         K: []map[int]string{
                             {
-                                1: "$K",
-                                2: "$K",
+                                1: "${K}",
+                                2: "${K}",
                             },
                         },
                         L: []string{
-                            "$L",
-                            "$L",
+                            "${L}",
+                            "${L}",
                         },
                     },
                 },
