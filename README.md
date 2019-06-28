@@ -7,7 +7,7 @@ envexpand command expands environment variables of yaml, json, toml files.
 
 ### install
 ```bash
-go get -u github.com/nissy/envexpand/cmd/envexpand
+$ go get -u github.com/nissy/envexpand/cmd/envexpand
 ```
 
 ### usage
@@ -62,7 +62,7 @@ glossary:
 
 ### install
 ```bash
-go get -u github.com/nissy/envexpand
+$ go get -u github.com/nissy/envexpand
 ```
 
 ### example
