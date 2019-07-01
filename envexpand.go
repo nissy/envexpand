@@ -53,14 +53,16 @@ func (envs environs) do(v interface{}) error {
 		switch que.Kind() {
 		case reflect.Struct:
 			for i := 0; i < que.NumField(); i++ {
-				if haveChild(que.Field(i)) || que.Field(i).Kind() == reflect.Slice || que.Field(i).Kind() == reflect.Map {
+				if que.Field(i).Kind() == reflect.String {
+					if len(que.Field(i).String()) > 0 {
+						que.Field(i).SetString(
+							envs.replace(
+								fmt.Sprintf("%s", que.Field(i).Interface()),
+							),
+						)
+					}
+				} else if haveChild(que.Field(i)) || que.Field(i).Kind() == reflect.Slice || que.Field(i).Kind() == reflect.Map {
 					ques = append(ques, que.Field(i))
-				} else if que.Field(i).Kind() == reflect.String {
-					que.Field(i).SetString(
-						envs.replace(
-							fmt.Sprintf("%s", que.Field(i).Interface()),
-						),
-					)
 				}
 			}
 		case reflect.Slice:
