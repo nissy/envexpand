@@ -1,5 +1,5 @@
 # envexpand
-envexpand recursively replaces strings with environment variables.
+envexpand is replace placeholders in strings recursively with environment variables.
 
 ### install
 ```bash
