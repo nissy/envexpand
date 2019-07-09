@@ -12,8 +12,8 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
+	"github.com/go-yaml/yaml"
 	"github.com/nissy/envexpand"
-	"gopkg.in/yaml.v2"
 )
 
 var version string
@@ -73,28 +73,19 @@ func run() error {
 func expand(filename string, in []byte, out interface{}) ([]byte, error) {
 	switch {
 	case isFileExtension(filename, "JSON"):
-		if err := json.Unmarshal(in, out); err != nil {
-			return nil, err
-		}
-		if err := envexpand.Do(out); err != nil {
+		if err := envexpand.Open(filename, out, json.Unmarshal); err != nil {
 			return nil, err
 		}
 		return json.Marshal(out)
 	case isFileExtension(filename, "TOML"):
-		if err := toml.Unmarshal(in, out); err != nil {
-			return nil, err
-		}
-		if err := envexpand.Do(out); err != nil {
+		if err := envexpand.Open(filename, out, toml.Unmarshal); err != nil {
 			return nil, err
 		}
 		var buf bytes.Buffer
 		err := toml.NewEncoder(&buf).Encode(out)
 		return buf.Bytes(), err
 	case isFileExtension(filename, "YAML", "YML"):
-		if err := yaml.Unmarshal(in, out); err != nil {
-			return nil, err
-		}
-		if err := envexpand.Do(out); err != nil {
+		if err := envexpand.Open(filename, out, yaml.Unmarshal); err != nil {
 			return nil, err
 		}
 		return yaml.Marshal(out)

@@ -4,10 +4,10 @@ glossary:
     title: S
     GlossList: 
       GlossEntry: 
-        ID: "$ID"
-        SortAs: "$ID"
+        ID: "${ID}"
+        SortAs: "${ID}"
         GlossTerm: "Standard Generalized Markup Language"
-        Acronym: "$ID"
+        Acronym: "${ID}"
         Abbrev: "ISO 8879:1986"
         GlossDef: 
           para: "A meta-markup language, used to create markup languages such as DocBook."

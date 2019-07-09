@@ -5,11 +5,11 @@
     [glossary.GlossDiv.GlossList]
       [glossary.GlossDiv.GlossList.GlossEntry]
         Abbrev = "ISO 8879:1986"
-        Acronym = "$ID"
+        Acronym = "${ID}"
         GlossSee = "markup"
         GlossTerm = "Standard Generalized Markup Language"
-        ID = "$ID"
-        SortAs = "$ID"
+        ID = "${ID}"
+        SortAs = "${ID}"
         [glossary.GlossDiv.GlossList.GlossEntry.GlossDef]
           GlossSeeAlso = ["GML", "XML"]
           para = "A meta-markup language, used to create markup languages such as DocBook."
