@@ -49,11 +49,14 @@ func (envs environs) do(v interface{}) error {
 		for que.Kind() == reflect.Ptr {
 			que = que.Elem()
 		}
+		if !que.CanSet() {
+			continue
+		}
 
 		switch que.Kind() {
 		case reflect.Struct:
 			for i := 0; i < que.NumField(); i++ {
-				if que.Field(i).Kind() == reflect.String {
+				if que.Field(i).Kind() == reflect.String && que.Field(i).CanSet() {
 					if len(que.Field(i).String()) > 0 {
 						que.Field(i).SetString(
 							envs.replace(
@@ -131,10 +134,12 @@ func (envs environs) in(a interface{}) interface{} {
 }
 
 func haveChild(v reflect.Value) bool {
-	if i := reflect.TypeOf(v.Interface()); i != nil {
-		if isChildKind(i.Kind()) {
-			if e := i.Elem(); e != nil {
-				return isChildKind(e.Kind())
+	if v.CanSet() {
+		if i := reflect.TypeOf(v.Interface()); i != nil {
+			if isChildKind(i.Kind()) {
+				if e := i.Elem(); e != nil {
+					return isChildKind(e.Kind())
+				}
 			}
 		}
 	}
@@ -159,7 +164,6 @@ func (envs environs) replace(s string) string {
 			s = strings.Replace(s, v, envs[v[2:len(v)-1]], -1)
 			continue
 		}
-
 		s = strings.Replace(s, v, envs[v[1:]], -1)
 	}
 
