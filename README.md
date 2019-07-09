@@ -80,8 +80,8 @@ func main() {
 ```
 
 ```bash
-$ echo A=$A B=$B J=$J K=$K L=$L
-A=AAAAA B=BBBBB J=JJJJJ K=KKKKK L=LLLLL
+$ echo $A $B $J $K $L
+AAAAA BBBBB JJJJJ KKKKK LLLLL
 ```
 
 ```
