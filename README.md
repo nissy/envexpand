@@ -122,12 +122,3 @@ main.ABC{
     },
 }
 ```
-
-
-```toml
-[databases]
-  driver = "postgres"
-  dsn = "postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOSTNAME}:5432/${DB_NAME}?sslmode=disable"
-```
-
-
