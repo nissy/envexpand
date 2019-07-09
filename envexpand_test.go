@@ -13,8 +13,8 @@ type (
 		B []string
 		C map[int]string
 		D *D
-		q string //private
-		r string //private
+		m string //private
+		n string //private
 	}
 	D struct {
 		E string
@@ -24,17 +24,11 @@ type (
 		G int
 		H string
 		I []*I
-		M *M
 	}
 	I struct {
 		J string
 		K []map[int]string
 		L []string
-	}
-	M struct {
-		n string           //private
-		o []map[int]string //private
-		p []string         //private
 	}
 )
 
@@ -66,23 +60,10 @@ func TestExpandStruct(t *testing.T) {
 						},
 					},
 				},
-				//M: &M{
-				//	n: "${n}",
-				//	o: []map[int]string{
-				//		{
-				//			1: "${o}",
-				//			2: "${o}",
-				//		},
-				//	},
-				//	p: []string{
-				//		"${p}",
-				//		"${p}",
-				//	},
-				//},
 			},
 		},
-		q: "${q}",
-		r: "${r}",
+		m: "${m}",
+		n: "${n}",
 	}
 
 	envs := map[string]string{
@@ -91,9 +72,8 @@ func TestExpandStruct(t *testing.T) {
 		"J": "JJJ",
 		"K": "KKK",
 		"L": "LLL",
-		"n": "nnn",
-		"o": "ooo",
-		"p": "ppp",
+		"m": "mmm", //private
+		"n": "nnn", //private
 	}
 
 	v2 := ABC{
@@ -123,23 +103,10 @@ func TestExpandStruct(t *testing.T) {
 						},
 					},
 				},
-				//M: &M{
-				//	n: "${n}",
-				//	o: []map[int]string{
-				//		{
-				//			1: "${o}",
-				//			2: "${o}",
-				//		},
-				//	},
-				//	p: []string{
-				//		"${p}",
-				//		"${p}",
-				//	},
-				//},
 			},
 		},
-		q: "${q}",
-		r: "${r}",
+		m: "${m}",
+		n: "${n}",
 	}
 
 	if err := setenvs(envs); err != nil {
@@ -159,4 +126,6 @@ func setenvs(kvs map[string]string) error {
 			return err
 		}
 	}
+
+	return nil
 }
