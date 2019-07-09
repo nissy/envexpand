@@ -6,7 +6,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -27,8 +26,6 @@ func main() {
 	if err := run(); err != nil {
 		log.Fatal(err)
 	}
-
-	os.Exit(0)
 }
 
 func run() error {
@@ -46,21 +43,8 @@ func run() error {
 		return err
 	}
 
-	filename := args[0]
-	file, err := os.Open(filename)
-	if err != nil {
-		return err
-	}
-
-	defer file.Close()
-
-	in, err := ioutil.ReadAll(file)
-	if err != nil {
-		return err
-	}
-
 	var out interface{}
-	data, err := expand(filename, &out)
+	data, err := expand(args[0], &out)
 	if err != nil {
 		return err
 	}
