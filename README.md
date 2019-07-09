@@ -80,8 +80,8 @@ func main() {
 ```
 
 ```bash
-$ echo $A $B $J $K $L
-AAAAA BBBBB JJJJJ KKKKK LLLLL
+$ echo A=$A B=$B J=$J K=$K L=$L
+A=AAAAA B=BBBBB J=JJJJJ K=KKKKK L=LLLLL
 ```
 
 ```
@@ -122,3 +122,12 @@ main.ABC{
     },
 }
 ```
+
+
+```toml
+[databases]
+  driver = "postgres"
+  dsn = "postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOSTNAME}:5432/${DB_NAME}?sslmode=disable"
+```
+
+

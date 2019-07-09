@@ -137,6 +137,9 @@ func haveChild(v reflect.Value) bool {
 	if v.CanSet() {
 		if i := reflect.TypeOf(v.Interface()); i != nil {
 			if isChildKind(i.Kind()) {
+				if i.Kind() == reflect.Struct {
+					return isChildKind(i.Kind())
+				}
 				if e := i.Elem(); e != nil {
 					return isChildKind(e.Kind())
 				}

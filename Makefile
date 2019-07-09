@@ -1,4 +1,4 @@
-VERSION := 1.0.5
+VERSION := 1.0.6
 NAME := envexpand
 GOOS := $(shell go env GOOS)
 GOARCH := $(shell go env GOARCH)

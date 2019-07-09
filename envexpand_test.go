@@ -18,7 +18,7 @@ type (
 	}
 	D struct {
 		E string
-		F *F
+		F F //non pointer
 	}
 	F struct {
 		G int
@@ -41,7 +41,7 @@ func TestExpandStruct(t *testing.T) {
 			"${B}",
 		},
 		D: &D{
-			F: &F{
+			F: F{
 				I: []*I{
 					{
 						J: "${J}",
@@ -84,7 +84,7 @@ func TestExpandStruct(t *testing.T) {
 			envs["B"],
 		},
 		D: &D{
-			F: &F{
+			F: F{
 				I: []*I{
 					{
 						J: envs["J"],
