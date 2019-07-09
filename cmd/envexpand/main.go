@@ -60,7 +60,7 @@ func run() error {
 	}
 
 	var out interface{}
-	data, err := expand(filename, in, &out)
+	data, err := expand(filename, &out)
 	if err != nil {
 		return err
 	}
@@ -70,7 +70,7 @@ func run() error {
 	return nil
 }
 
-func expand(filename string, in []byte, out interface{}) ([]byte, error) {
+func expand(filename string, out interface{}) ([]byte, error) {
 	switch {
 	case isFileExtension(filename, "JSON"):
 		if err := envexpand.Open(filename, out, json.Unmarshal); err != nil {
