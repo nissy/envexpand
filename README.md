@@ -8,7 +8,7 @@ $ go get -u github.com/nissy/envexpand
 
 ### example
 
-environment variable place holder.
+environment variable placeholder.
 
 `${VARIABLE_NAME}` 
 
